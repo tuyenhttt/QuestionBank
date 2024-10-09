@@ -33,6 +33,7 @@ exports.addQuiz = async (req, res) => {
 };
 
 // Post Quiz (Submit new quiz)
+
 exports.postQuiz = async (req, res) => {
   console.log(req.body);
 
@@ -43,10 +44,9 @@ exports.postQuiz = async (req, res) => {
 
   try {
     await Quiz.create(newQuiz);
-    res.redirect("/quizzes"); // Redirect to quiz list after adding
+    res.redirect("/quizzes");
   } catch (error) {
     console.log(error);
-    res.status(500).send("Server error");
   }
 };
 
@@ -113,8 +113,8 @@ exports.deleteQuiz = async (req, res) => {
       return res.status(404).send("Quiz not found");
     }
 
-    req.flash("success", "Quiz deleted successfully"); // If using flash messages
-    res.render("quizzes/showQuizzes"); // Redirect to quiz list or homepage
+    // Optionally, you can send a response message
+    res.status(200).send("Quiz deleted successfully");
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");

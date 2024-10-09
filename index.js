@@ -7,6 +7,7 @@ const productRouter = require("./routes/api/product.route");
 const mainRoute = require("./routes/mvc/home.router");
 const headerRoute = require("./routes/mvc/header.router");
 const questionRoute = require("./routes/mvc/question.router");
+const quizRoute = require("./routes/mvc/quiz.router");
 const app = express();
 const connectDB = require("./configs/database");
 
@@ -27,6 +28,7 @@ app.set("view engine", "ejs");
 app.use("/", mainRoute);
 app.use("/", headerRoute);
 app.use("/", questionRoute);
+app.use("/", quizRoute);
 
 app.get("*", (req, res) => {
   res.status(404).render("404");

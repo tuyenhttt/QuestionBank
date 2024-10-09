@@ -38,9 +38,6 @@
               <a class="btn btn-primary btn-warning" href="/question/<%= question._id %>" role="button">Edit</a>
               <form action="<%= question._id %>" method="DELETE" style="display: inline" id="deleteForm">
                 <input type="hidden" name="_method" value="DELETE" />
-                <!-- <button href="/question/delete/<%= question._id %>" type="button" class="btn btn-danger">
-                  Delete
-                </button> -->
                 <button data-id="<%= question._id %>" type="button" class="btn btn-danger"
                   onclick="deleteQuestion(this)">
                   Delete
