@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../../css/question.css">
+  <link rel="stylesheet" href="../../css/main.css">
+</head>
+
+<body>
+  <div>
+    <a href="/addQuestion" class="btn btn-sm btn-outline-secondary button">New Question</a>
+
+    <h1 class="text-center">
+      <%= description %>
+    </h1>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">Question</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% questions.forEach((question, index)=> { %>
+          <tr>
+            <td>
+              <%= index + 1 %>
+            </td>
+            <td>
+              <%= question.text %>
+            </td>
+            <td>
+              <a class="btn btn-primary" href="/question/<%= question._id %>" role="button">View</a>
+              <a class="btn btn-primary btn-warning" href="/question/<%= question._id %>" role="button">Edit</a>
+              <form action="<%= question._id %>" method="DELETE" style="display: inline" id="deleteForm">
+                <input type="hidden" name="_method" value="DELETE" />
+                <!-- <button href="/question/delete/<%= question._id %>" type="button" class="btn btn-danger">
+                  Delete
+                </button> -->
+                <button data-id="<%= question._id %>" type="button" class="btn btn-danger"
+                  onclick="deleteQuestion(this)">
+                  Delete
+                </button>
+              </form>
+            </td>
+          </tr>
+          <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    async function deleteQuestion(button) {
+      const questionId = button.getAttribute('data-id');
+
+      try {
+        const response = await fetch(`/question/delete/${questionId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          // Optionally, you can remove the question row from the table without reloading
+          button.closest('tr').remove(); // Remove the row containing the deleted question
+        } else {
+          // Handle the error response if needed
+          const errorMessage = await response.text();
+          console.error('Failed to delete the question:', errorMessage);
+        }
+      } catch (error) {
+        console.error('Error deleting question:', error);
+      }
+    }
+  </script>
+
+</body>
+
+</html>
